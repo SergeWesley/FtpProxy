@@ -25,6 +25,7 @@ COPY /docker/vhost.conf /etc/apache2/sites-enabled/000-default.conf
 COPY /docker/ports.conf /etc/apache2/ports.conf
 
 WORKDIR /srv/app
+ENV COMPOSER_ALLOW_SUPERUSER=1
 RUN composer install --no-interaction --prefer-dist
 RUN chown -R www-data:www-data /srv/app
 RUN chmod -R 755 /srv/app
