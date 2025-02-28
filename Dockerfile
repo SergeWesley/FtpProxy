@@ -26,9 +26,14 @@ COPY /docker/ports.conf /etc/apache2/ports.conf
 
 WORKDIR /srv/app
 ENV COMPOSER_ALLOW_SUPERUSER=1
-RUN composer install --no-interaction --prefer-dist
 RUN chown -R www-data:www-data /srv/app
 RUN chmod -R 755 /srv/app
+
+RUN composer install --no-interaction --prefer-dist
+
+# Exécuter les migrations
+RUN php bin/console doctrine:database:create
+RUN php bin/console doctrine:migrations:migrate --no-interaction
 
 # Active mod_rewrite pour gérer les réécritures d'URL
 RUN a2enmod rewrite
