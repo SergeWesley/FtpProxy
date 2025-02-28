@@ -35,7 +35,5 @@ RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 EXPOSE 10000
 
-RUN composer install 
-
 USER www-data
 
