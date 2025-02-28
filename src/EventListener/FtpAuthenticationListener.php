@@ -18,6 +18,9 @@ class FtpAuthenticationListener
             if (!isset($ftpUser)|| !isset($ftpPass)) {
                 throw new BadRequestHttpException('Missing FTP credentials');
             }
+
+            $request->attributes->set('ftp_user', $ftpUser);
+            $request->attributes->set('ftp_pass', $ftpPass);
         }
     }
 }

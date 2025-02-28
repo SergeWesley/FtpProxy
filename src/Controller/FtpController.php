@@ -22,9 +22,11 @@ class FtpController extends AbstractController
     #[Route('/{alias}/{path}', methods: ['GET'], defaults: ['ftp_required' => true], requirements: ['path' => '.+'])]
     public function listFiles(Request $request, string $alias, string $path = '/'): JsonResponse 
     {
+        $ftpUser = $request->attributes->get('ftp_user');
+        $ftpPass = $request->attributes->get('ftp_pass');
         $sanitizedPath = '/' . ltrim($path, '/');
 
-        $filesystem = $this->ftpService->connectToServer($alias);
+        $filesystem = $this->ftpService->connectToServer($alias, $ftpUser, $ftpPass);
         $files = $filesystem->listContents($sanitizedPath, false);
 
         return $this->json(["files" => $files]);

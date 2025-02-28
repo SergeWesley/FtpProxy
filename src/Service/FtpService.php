@@ -16,7 +16,7 @@ class FtpService
     )
     {}
 
-    public function connectToServer(string $alias): Filesystem 
+    public function connectToServer(string $alias, string $ftpUser, $ftpPass): Filesystem 
     {
         $ftpServer = $this->ftpServerRepository->findOneBy(['alias' => $alias]);
 
@@ -26,8 +26,8 @@ class FtpService
 
         $connectionOptions = FtpConnectionOptions::fromArray([
             'host' => $ftpServer->getHost(),
-            'username' => 'anonymous',
-            'password' => '',
+            'username' => $ftpUser,
+            'password' => $ftpPass,
             'port'     => 21,
             'timeout'  => 10,
             'root'     => '/',
