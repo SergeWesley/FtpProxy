@@ -20,6 +20,10 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
 # Installer Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
+COPY . /srv/app
+COPY /docker/vhost.conf /etc/apache2/sites-enabled/000-default.conf
+COPY /docker/ports.conf /etc/apache2/ports.conf
+
 WORKDIR /srv/app
 RUN chown -R www-data:www-data /srv/app
 RUN chmod -R 755 /srv/app
@@ -29,4 +33,11 @@ RUN a2enmod rewrite
 
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
+EXPOSE 10000
+
+RUN composer install --no-interaction --prefer-dist
+
+CMD ["apache2-foreground"]
+
 USER www-data
+
