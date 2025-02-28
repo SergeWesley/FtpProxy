@@ -35,9 +35,7 @@ RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 EXPOSE 10000
 
-RUN composer install --no-interaction --prefer-dist
-
-CMD ["apache2-foreground"]
+RUN composer install 
 
 USER www-data
 
