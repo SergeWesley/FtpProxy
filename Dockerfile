@@ -46,6 +46,8 @@ RUN composer install --no-interaction --prefer-dist
 RUN php bin/console doctrine:database:create
 RUN php bin/console doctrine:migrations:migrate --no-interaction
 
+RUN php bin/console lexik:jwt:generate-keypair
+
 RUN php bin/console cache:clear --env=prod --no-debug
 
 
