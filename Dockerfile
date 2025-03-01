@@ -29,6 +29,7 @@ ENV COMPOSER_ALLOW_SUPERUSER=1
 RUN chown -R www-data:www-data /srv/app
 RUN chmod -R 755 /srv/app
 RUN mkdir -p /srv/app/var/cache
+RUN mkdir -p /srv/app/var/log
 RUN chown -R www-data:www-data /srv/app/var
 RUN chmod -R 755 /srv/app/var
 
