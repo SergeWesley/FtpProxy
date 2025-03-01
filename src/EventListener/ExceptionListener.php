@@ -2,6 +2,7 @@
 
 namespace App\EventListener;
 
+use ApiPlatform\Symfony\Security\Exception\AccessDeniedException;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -32,7 +33,7 @@ class ExceptionListener implements EventSubscriberInterface
         } elseif ($exception instanceof BadRequestHttpException) {
             $statusCode = Response::HTTP_BAD_REQUEST;
             $response['message'] = $exception->getMessage();
-        } elseif ($exception instanceof AccessDeniedHttpException) {
+        } elseif ($exception instanceof AccessDeniedHttpException || $exception instanceof AccessDeniedException) {
             $statusCode = Response::HTTP_FORBIDDEN;
             $response['message'] = 'Access denied';
         } else {
