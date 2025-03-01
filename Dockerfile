@@ -28,6 +28,8 @@ WORKDIR /srv/app
 ENV COMPOSER_ALLOW_SUPERUSER=1
 RUN chown -R www-data:www-data /srv/app
 RUN chmod -R 755 /srv/app
+RUN chown -R www-data:www-data /srv/app/var/cache
+RUN chmod -R 755 /srv/app/var/cache
 
 
 RUN composer install --no-interaction --prefer-dist
