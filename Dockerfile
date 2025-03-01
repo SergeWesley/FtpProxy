@@ -33,6 +33,8 @@ RUN mkdir -p /srv/app/var/log
 RUN chown -R www-data:www-data /srv/app/var
 RUN chmod -R 755 /srv/app/var
 
+USER www-data
+
 RUN composer install --no-interaction --prefer-dist
 
 # Exécuter les migrations
@@ -47,8 +49,3 @@ RUN a2enmod rewrite
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 EXPOSE 10000
-
-USER www-data
-
-
-
