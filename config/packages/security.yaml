@@ -24,12 +24,19 @@ security:
             json_login:
                 check_path: /auth/login
                 username_path: username
-                password_path: password        
+                password_path: password  
+
+        register:
+            pattern: ^/users$
+            stateless: true
+            methods: [POST]
+            security: false
 
         main:
-            pattern: ^/ 
+            pattern: ^/
             stateless: true
-            jwt: ~
+            custom_authenticators:
+                - App\Security\JwtHeaderAuthenticator
         
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
@@ -40,9 +47,9 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/auth/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }  # Permet d'obtenir un token
-        # - { path: ^/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }  # Permet d'accéder à la documentation
+        - { path: ^/users$, methods: [POST], roles: PUBLIC_ACCESS }
         - { path: ^/, roles: IS_AUTHENTICATED_FULLY } 
+        
 
 when@test:
     security:
