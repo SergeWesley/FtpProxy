@@ -19,6 +19,8 @@ class ExceptionListener implements EventSubscriberInterface
     {
         $exception = $event->getThrowable();
 
+        dump($exception);
+        
         $response = [
             'status' => 'error',
             'message' => 'An unexpected error occurred'
