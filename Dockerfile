@@ -33,6 +33,11 @@ RUN mkdir -p /srv/app/var/log
 RUN chown -R www-data:www-data /srv/app/var
 RUN chmod -R 755 /srv/app/var
 
+# Active mod_rewrite pour gérer les réécritures d'URL
+RUN a2enmod rewrite
+
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
+
 USER www-data
 
 RUN composer install --no-interaction --prefer-dist
@@ -43,9 +48,5 @@ RUN php bin/console doctrine:migrations:migrate --no-interaction
 
 RUN php bin/console cache:clear --env=prod --no-debug
 
-# Active mod_rewrite pour gérer les réécritures d'URL
-RUN a2enmod rewrite
-
-RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 EXPOSE 10000
